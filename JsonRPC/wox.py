@@ -3,6 +3,8 @@ from __future__ import print_function
 import json
 import sys
 import inspect
+import requests
+import webbrowser
 
 class Wox(object):
     """
@@ -113,3 +115,37 @@ class WoxAPI(object):
         reload all wox plugins
         """
         print(json.dumps({"method": "Wox.ReloadPlugins","parameters":[]}))
+
+class Web(object):
+    def request(url):
+            """
+            sub class need to override this method
+            """
+        headers = {
+            #"Referer": 'https://www.google.com',
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/562.0 (KHTML, like Gecko) Chrome/22.01325.712 Safari/562",
+            "cache-control": "no-cache",
+            "pragma": "no-cache"
+        }
+        response = requests.get(url,headers=headers)
+        return response
+
+    def request_iv(url):
+        """
+        sub class need to override this method
+        """
+        headers = {
+            #"Referer": 'https://www.google.com',
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/562.0 (KHTML, like Gecko) Chrome/22.01325.712 Safari/562",
+            "cache-control": "no-cache",
+            "pragma": "no-cache",
+            "X-Requested-With" : "XMLHttpRequest"
+        }
+        response = requests.get(url,headers=headers)
+        return response
+
+    def open_browser(url):
+        """
+        sub class need to override this method
+        """
+        webbrowser.open(url)
